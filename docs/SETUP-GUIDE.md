@@ -10,16 +10,19 @@ double-click the desktop icon.
 
 ## Part 1: Install (about 5 minutes)
 
-1. Click this link: **<https://github.com/anikor-dev/anikor/releases/latest/download/Install.ANI.KOR.bat>**
-   It downloads a small file called `Install.ANI.KOR.bat`.
-   (If your browser asks whether to keep it, click **Keep**.)
-2. Open your **Downloads** folder.
-3. **Double-click** `Install.ANI.KOR.bat`.
-4. Windows may show a blue box, **"Windows protected your PC"**.
-   Click **More info**, then **Run anyway**. (It shows this for any file it doesn't know.)
-5. A black window opens and starts installing. You'll see lines like `[ok] uv`, `[ok] mpv`.
-   **Leave it open.** If something asks *"Do you want to allow…"*, click **Yes**.
-6. When it says **ANI.KOR is installed!**, press any key to close the window.
+1. Click **Start** (the Windows button), type `PowerShell`, and click **Windows PowerShell**.
+   A blue or black window opens. (Don't choose "Run as administrator".)
+2. Copy this whole line, click in the PowerShell window, right-click to paste it, and press **Enter**:
+   ```
+   irm https://raw.githubusercontent.com/anikor-dev/anikor/main/windows/install.ps1 | iex
+   ```
+3. It starts installing. You'll see lines like `[ok] uv`, `[ok] mpv`.
+   **Leave it open** (about 5 minutes). If something asks *"Do you want to allow…"*, click **Yes**.
+4. When it says **ANI.KOR is installed!**, you can close the window.
+
+> Why not a download? Windows 11's **Smart App Control** blocks downloaded installer files.
+> Pasting the line does the exact same install without a file to block. **Don't turn Smart
+> App Control off**: once it's off, Windows can't turn it back on without a reinstall.
 
 You now have an **ANI.KOR** icon on your desktop (and in the Start menu).
 

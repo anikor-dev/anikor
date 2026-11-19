@@ -7,14 +7,17 @@ your MyAnimeList updates by itself.
 Built on [Viu](https://github.com/viu-media/viu) (archived), with a working anime source,
 MyAnimeList sync and a new poster home screen.
 
-## Windows: install in 3 clicks
+## Windows: install
 
-1. **[Download the installer](https://github.com/anikor-dev/anikor/releases/latest/download/Install.ANI.KOR.bat)**
-   (`Install.ANI.KOR.bat`).
-2. Double-click the file you downloaded.
-   - If Windows says *"Windows protected your PC"*: click **More info** → **Run anyway**.
-   - Don't pick "Run as administrator", a normal double-click is right.
-3. Wait about 5 minutes. When it says **ANI.KOR is installed!**, press any key.
+1. Click **Start**, type `PowerShell`, open **Windows PowerShell** (normal, *not* "Run as administrator").
+2. Paste this and press **Enter**:
+   ```
+   irm https://raw.githubusercontent.com/anikor-dev/anikor/main/windows/install.ps1 | iex
+   ```
+3. Wait about 5 minutes until it says **ANI.KOR is installed!**
+
+(There's also a double-click [Install.ANI.KOR.bat](https://github.com/anikor-dev/anikor/releases/latest/download/Install.ANI.KOR.bat),
+but Windows 11's *Smart App Control* blocks downloaded .bat files. The PowerShell line always works.)
 
 Then double-click **ANI.KOR** on your desktop. The first time, it walks you through linking
 your MyAnimeList (about 2 minutes, once). Full beginner walkthrough with every click:

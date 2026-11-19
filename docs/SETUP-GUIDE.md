@@ -21,8 +21,9 @@ double-click the desktop icon.
 4. When it says **ANI.KOR is installed!**, you can close the window.
 
 > Why not a download? Windows 11's **Smart App Control** blocks downloaded installer files.
-> Pasting the line does the exact same install without a file to block. **Don't turn Smart
-> App Control off**: once it's off, Windows can't turn it back on without a reinstall.
+> Pasting the line does the exact same install without a file to block. If Windows still
+> blocks something, take a screenshot and send it. Don't turn Smart App Control off for
+> this: once it's off, Windows can't turn it back on without a reinstall.
 
 You now have an **ANI.KOR** icon on your desktop (and in the Start menu).
 

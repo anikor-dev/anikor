@@ -17,7 +17,7 @@ MyAnimeList sync and a new poster home screen.
 3. Wait about 5 minutes until it says **ANI.KOR is installed!**
 
 (There's also a double-click [Install.ANI.KOR.bat](https://github.com/anikor-dev/anikor/releases/latest/download/Install.ANI.KOR.bat),
-but Windows 11's *Smart App Control* blocks downloaded .bat files. The PowerShell line always works.)
+but Windows 11's *Smart App Control* blocks downloaded .bat files. The PowerShell line avoids that download.)
 
 Then double-click **ANI.KOR** on your desktop. The first time, it walks you through linking
 your MyAnimeList (about 2 minutes, once). Full beginner walkthrough with every click:

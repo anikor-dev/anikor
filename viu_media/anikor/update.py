@@ -72,7 +72,7 @@ def latest(max_age: float = 3600) -> dict | None:
         return None
 
 
-def check(max_age: float = 3600) -> dict | None:
+def check(max_age: float = 600) -> dict | None:
     if os.environ.get("ANIKOR_NO_UPDATE") == "1" or is_dev_install():
         return None
     info = latest(max_age)

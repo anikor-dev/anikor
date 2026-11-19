@@ -1,6 +1,6 @@
 # ANI.KOR launcher for Windows (the desktop shortcut runs this inside Windows Terminal).
-# Every start: update to the newest release if there is one, then open ANI.KOR.
-# The UPDATE button inside ANI.KOR quits back to here with a flag file -> update -> reopen.
+# Opens ANI.KOR. It never updates by itself: when a new version is out, ANI.KOR shows an
+# UPDATE button; clicking it quits back to here with a flag file -> update -> reopen.
 # Written by `anikor setup-windows`; refreshed automatically after each update.
 param([switch]$Update, [int]$WaitPid = 0)
 
@@ -40,7 +40,7 @@ function Update-Anikor([switch]$Loud) {
     Start-Sleep 1
 }
 
-Update-Anikor -Loud:$Update
+if ($Update) { Update-Anikor -Loud }
 while ($true) {
     if (Test-Path $Flag) { Remove-Item $Flag -Force }
     anikor

@@ -1,6 +1,6 @@
 [project]
 name = "anikor"
-version = "0.1.0"
+version = "0.1.1"
 description = "ANI.KOR — a MyAnimeList-style anime dashboard for the terminal, built on Viu"
 license = "Unlicense"
 readme = "README.md"

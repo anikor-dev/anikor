@@ -20,8 +20,8 @@ Then double-click **ANI.KOR** on your desktop. The first time, it walks you thro
 your MyAnimeList (about 2 minutes, once). Full beginner walkthrough with every click:
 **[docs/SETUP-GUIDE.md](docs/SETUP-GUIDE.md)**.
 
-**Updates are automatic.** Every time you open ANI.KOR it installs the newest version first.
-If an update comes out while it's open, a big **UPDATE** button appears at the top. Click it.
+**Updates are one click.** When a new version is out, a pink **UPDATE** button appears at
+the top of ANI.KOR. Click it (or press U) and it updates and reopens. Nothing updates by itself.
 
 ## Keys
 

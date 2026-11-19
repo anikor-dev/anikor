@@ -59,9 +59,9 @@ In the video window: **Space** pause · **←/→** skip back/forward · **f** f
 
 ## Updates
 
-Nothing to do. Every time you open ANI.KOR it checks for a new version and installs
-it first. If a new version comes out while ANI.KOR is open, a pink **UPDATE** button appears
-at the top. Click it and ANI.KOR updates and reopens.
+When a new version is out, a pink **UPDATE** button appears at the top of ANI.KOR.
+Click it (or press **U**) and ANI.KOR updates and reopens by itself. Nothing ever updates
+without you clicking it, so if you're told to skip an update, just don't click it.
 
 ## If something goes wrong
 

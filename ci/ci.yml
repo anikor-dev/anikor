@@ -1,0 +1,49 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Build
+        run: uv build
+      - name: Install the wheel like the installer does
+        shell: bash
+        run: uv tool install --python 3.12 dist/*.whl
+      - name: anikor version / help
+        shell: bash
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          anikor version
+          anikor --help
+      - name: Smoke test (imports, defaults, dashboard renders headless)
+        shell: bash
+        run: |
+          PY=$(uv tool dir)/anikor/$([ "$RUNNER_OS" = Windows ] && echo Scripts/python.exe || echo bin/python)
+          "$PY" scripts/smoke_test.py
+      - name: Windows shortcut + Terminal profile
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $env:Path = "$env:USERPROFILE\.local\bin;$env:Path"
+          anikor setup-windows
+          Get-Content "$env:LOCALAPPDATA\Microsoft\Windows Terminal\Fragments\ANI.KOR\anikor.json" | Select-Object -First 5
+          if (-not (Test-Path "$env:LOCALAPPDATA\ANI.KOR\anikor-launch.ps1")) { throw 'launcher missing' }
+      - name: PowerShell scripts parse
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          foreach ($f in 'windows/install.ps1','viu_media/anikor/windows/anikor-launch.ps1') {
+            $e = $null; [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $f), [ref]$null, [ref]$e) | Out-Null
+            if ($e) { $e | Out-String | Write-Host; throw "$f has syntax errors" }
+          }

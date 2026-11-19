@@ -11,6 +11,15 @@ def player_controls(ctx: Context, state: State) -> Union[State, InternalDirectiv
     feedback = ctx.feedback
     feedback.clear_console()
 
+    # ANI.KOR: a player hotkey can drop this flag file and quit the player to skip this
+    # screen and go straight back to the episode list you picked from.
+    import os
+    from .....anikor.paths import BACK_FLAG as _flag
+    if os.path.exists(_flag):
+        os.remove(_flag)
+        ctx.switch.force_episodes_menu()
+        return InternalDirective.BACKX2
+
     config = ctx.config
     selector = ctx.selector
 

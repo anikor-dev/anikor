@@ -77,14 +77,25 @@ def provider_search(ctx: Context, state: State) -> State | InternalDirective:
     selected_provider_anime: SearchResult | None = None
 
     # --- Auto-Select or Prompt ---
+    # 2026-11-18 patch: only auto-pick a CONFIDENT match. When the show isn't on the
+    # source, the closest title was a different show ("The Cold Sato-san" -> "Trails
+    # of Cold Steel"); below 80% similarity, ask instead of playing the wrong anime.
+    best_match_title, best_score = None, 0
     if config.general.auto_select_anime_result:
-        # Use fuzzy matching to find the best title
+        from thefuzz import fuzz as _fz
         best_match_title = find_best_match_title(
             provider_results_map, config.general.provider, media_item
         )
+        _bt = normalize_title(best_match_title, config.general.provider.value).lower()
+        best_score = max(_fz.ratio(_bt, (media_item.title.romaji or "").lower()),
+                         _fz.ratio(_bt, (media_item.title.english or "").lower()),
+                         *[_fz.ratio(_bt, (x or "").lower()) for x in (media_item.synonymns or [])])
+    if best_match_title and best_score >= 80:
         feedback.info(f"Auto-selecting best match: {best_match_title}")
         selected_provider_anime = provider_results_map[best_match_title]
     else:
+        if best_match_title:
+            feedback.warning(f"No sure match for '{media_title}' on this source — pick one, or Back if it isn't listed")
         choices = list(provider_results_map.keys())
         choices.append("Back")
 

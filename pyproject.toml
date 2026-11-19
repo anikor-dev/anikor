@@ -1,8 +1,8 @@
 [project]
-name = "viu-media"
-version = "3.5.0"
-description = "A browser anime site experience from the terminal"
-license = "UNLICENSE"
+name = "anikor"
+version = "0.1.0"
+description = "ANI.KOR — a MyAnimeList-style anime dashboard for the terminal, built on Viu"
+license = "Unlicense"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -12,48 +12,45 @@ dependencies = [
   "pycryptodomex>=3.23.0",
   "pydantic>=2.11.7",
   "rich>=13.9.2",
-]
-
-[project.scripts]
-viu = 'viu_media:Cli'
-
-[project.optional-dependencies]
-standard = [
+  # Viu's "standard" extras
   "thefuzz>=0.22.1",
   "yt-dlp>=2025.7.21",
-  "pycryptodomex>=3.23.0",
-  "pypiwin32; sys_platform == 'win32'",   # For Windows-specific functionality
-  "pyobjc; sys_platform == 'darwin'",     # For macOS-specific functionality
-  "dbus-python; sys_platform == 'linux'", # For Linux-specific functionality (e.g., notifications),
   "plyer>=2.1.0",
   "lxml>=6.0.0",
+  "pypiwin32; sys_platform == 'win32'",
+  # ANI.KOR dashboard
+  "textual==8.2.8",
+  "textual-image==0.14.4",
+  "pillow>=10",
 ]
-notifications = [
-  "pypiwin32; sys_platform == 'win32'",          # For Windows-specific functionality
-  "pyobjc; sys_platform == 'darwin'",            # For macOS-specific functionality
-  "dbus-python>=1.4.0; sys_platform == 'linux'",
-  "plyer>=2.1.0",
-]
+
+[project.urls]
+Homepage = "https://github.com/anikor-dev/anikor"
+
+[project.scripts]
+anikor = "viu_media.anikor.cli:main"
+viu = "viu_media:Cli"
+
+[project.optional-dependencies]
+linux = ["dbus-python; sys_platform == 'linux'"]
 mpv = ["mpv>=1.0.7"]
-torrent = ["libtorrent>=2.0.11"]
-lxml = ["lxml>=6.0.0"]
 discord = ["pypresence>=4.3.0"]
-download = ["pycryptodomex>=3.23.0", "yt-dlp>=2025.7.21"]
-torrents = ["libtorrent>=2.0.11"]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["viu_media"]
+
+[tool.hatch.build.targets.sdist]
+include = ["viu_media", "README.md", "LICENSE", "DISCLAIMER.md"]
+
 [dependency-groups]
 dev = [
-  "pre-commit>=4.0.1",
-  "pyinstaller>=6.11.1",
-  "pyright>=1.1.384",
   "pytest>=8.3.3",
   "pytest-httpx>=0.35.0",
   "ruff>=0.6.9",
-  "types-lxml>=2026.2.16",
 ]
 
 [tool.pytest.ini_options]

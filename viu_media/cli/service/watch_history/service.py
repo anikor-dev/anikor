@@ -54,6 +54,9 @@ class WatchHistoryService:
                     f"Not updating remote watch history since completion percentage ({completion_percentage} is not greater than episode complete at ({self.config.stream.episode_complete_at}))"
                 )
                 return
+        # ANI.KOR: MyAnimeList sync
+        from .... import mal_sync
+        mal_sync.play_finished(media_item, player_result.episode)   # background (ANI.KOR 11-18)
         if self.media_api and self.media_api.is_authenticated():
             if not self.media_api.update_list_entry(
                 UpdateUserMediaListEntryParams(
@@ -112,6 +115,14 @@ class WatchHistoryService:
         else:
             episode = current_local_episode
 
+        # MAL progress = episodes watched -> the next one is watched+1 (local patch)
+        from .... import mal_sync
+        if not media_item.user_status and mal_sync.logged_in():
+            watched = mal_sync.progress(media_item.id_mal)
+            if watched is not None:
+                nxt = str(watched + 1) if not media_item.episodes or watched < media_item.episodes else str(watched)
+                if episode != nxt and self.config.general.preferred_tracker == "remote":
+                    episode, start_time = nxt, None
         # TODO: check if start time is mostly complete and increment the episode
         if episode == "0":
             episode = "1"
@@ -133,6 +144,11 @@ class WatchHistoryService:
             score=score,
             notes=notes,
         )
+
+        from .... import mal_sync
+        if mal_sync.logged_in():
+            mal_sync.push(media_item.id_mal, episode=progress, total=media_item.episodes,
+                          status=status, score=score)
 
         if self.media_api and self.media_api.is_authenticated():
             self.media_api.update_list_entry(

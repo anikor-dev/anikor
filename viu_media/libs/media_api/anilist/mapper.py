@@ -159,10 +159,13 @@ def _to_generic_tags(anilist_tags: list[AnilistMediaTag]) -> List[MediaTagItem]:
     """Maps a list of AniList tags to generic MediaTag objects."""
     if not anilist_tags:
         return []
+    # AniList keeps adding tags (e.g. "Exiled", 2026) after Viu was archived: skip
+    # ones this Viu doesn't know instead of crashing the whole list (2026-11-18 patch)
+    _known = {m.value for m in MediaTag}
     return [
         MediaTagItem(name=MediaTag(t["name"]), rank=t.get("rank"))
         for t in anilist_tags
-        if t and t.get("name")
+        if t and t.get("name") in _known
     ]
 
 
@@ -237,14 +240,14 @@ def _to_generic_media_item(
         type=data.get("type", "ANIME"),
         title=_to_generic_media_title(data["title"]),
         status=status_map[data["status"]],
-        format=MediaFormat(data["format"]) if data["format"] else None,
+        format=MediaFormat(data["format"]) if data["format"] in {m.value for m in MediaFormat} else None,  # 2026-11-18: unknown formats -> None, not a crash
         cover_image=_to_generic_media_image(data["coverImage"]),
         banner_image=data.get("bannerImage"),
         trailer=_to_generic_media_trailer(data["trailer"]),
         description=data.get("description"),
         episodes=data.get("episodes"),
         duration=data.get("duration"),
-        genres=[MediaGenre(genre) for genre in data["genres"]],
+        genres=[MediaGenre(g) for g in (data["genres"] or []) if g in {m.value for m in MediaGenre}],  # 2026-11-18: skip genres added after Viu was archived
         tags=_to_generic_tags(data.get("tags")),
         studios=_to_generic_studios(data.get("studios")),
         synonymns=data.get("synonyms", []),

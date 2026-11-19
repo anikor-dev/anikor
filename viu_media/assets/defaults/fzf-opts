@@ -1,8 +1,7 @@
---color=fg:#d0d0d0,fg+:#d0d0d0,bg:#121212,bg+:#262626
---color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
---color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
---color=border:#262626,label:#aeaeae,query:#d9d9d9
---border=rounded
+--color=fg:-1,fg+:15,bg:-1,bg+:-1,gutter:-1,preview-bg:-1
+--color=hl:9,hl+:1,info:8,marker:2
+--color=prompt:5,spinner:5,pointer:1,header:13
+--color=border:7,label:13,query:-1,separator:8,scrollbar:8
 --border-label=''
 --prompt='>'
 --marker='>'
@@ -19,5 +18,5 @@
 -i
 --exact
 --tabstop=1
---preview-window=border-rounded,left,35%,wrap
+--preview-window=border-right,left,35%,wrap
 --wrap

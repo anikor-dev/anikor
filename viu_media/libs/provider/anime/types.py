@@ -12,6 +12,7 @@ class ProviderName(Enum):
     ALLANIME = "allanime"
     ANIMEPAHE = "animepahe"
     ANIMEUNITY = "animeunity"
+    ANICLI = "anicli"
 
 
 class ProviderServer(Enum):

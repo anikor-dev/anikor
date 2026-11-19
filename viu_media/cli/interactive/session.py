@@ -281,9 +281,16 @@ class Session:
         while self._history:
             current_state = self._history[-1]
 
+            selector = getattr(self._context, "selector", None)
+            if selector is not None:
+                selector.went_back = False
             next_step = self._menus[current_state.menu_name].execute(
                 self._context, current_state
             )
+            # Tab in any menu (fzf selector patch) = back one screen, whatever the menu returned
+            if selector is not None and getattr(selector, "went_back", False):
+                selector.went_back = False
+                next_step = InternalDirective.BACK
 
             if isinstance(next_step, InternalDirective):
                 if next_step == InternalDirective.MAIN:

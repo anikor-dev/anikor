@@ -1,0 +1,32 @@
+name: release
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Version in pyproject matches the tag
+        run: |
+          v=$(sed -n 's/^version = "\(.*\)"/\1/p' pyproject.toml | head -1)
+          [ "v$v" = "$GITHUB_REF_NAME" ] || { echo "pyproject says $v but tag is $GITHUB_REF_NAME"; exit 1; }
+      - run: uv build
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          awk -v h="## v$v " 'index($0,h)==1{on=1;next} /^## v/{on=0} on' CHANGELOG.md > notes.md
+          printf '\n---\n**New here? (Windows)** Download **Install ANI.KOR.bat** below and double-click it. [Step-by-step guide](https://github.com/%s/blob/main/docs/SETUP-GUIDE.md)\n' "$GITHUB_REPOSITORY" >> notes.md
+          gh release create "$GITHUB_REF_NAME" dist/*.whl "windows/Install ANI.KOR.bat" \
+            --title "ANI.KOR $GITHUB_REF_NAME" --notes-file notes.md

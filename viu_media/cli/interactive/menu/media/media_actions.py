@@ -202,7 +202,8 @@ def _manage_user_media_list(ctx: Context, state: State) -> MenuAction:
         if not media_item:
             return InternalDirective.RELOAD
 
-        if not ctx.media_api.is_authenticated():
+        from ..... import mal_sync   # ANI.KOR: MAL counts as logged in
+        if not ctx.media_api.is_authenticated() and not mal_sync.logged_in():
             feedback.warning(
                 "You are not authenticated",
             )
@@ -219,12 +220,17 @@ def _manage_user_media_list(ctx: Context, state: State) -> MenuAction:
                 status=UserMediaListStatus(status),
             )
             # remote
-            if not ctx.media_api.update_list_entry(
+            if ctx.media_api.is_authenticated() and not ctx.media_api.update_list_entry(
                 UpdateUserMediaListEntryParams(
                     media_item.id, status=UserMediaListStatus(status)
                 )
             ):
                 print(f"Failed to update {media_item.title.english}")
+            if mal_sync.logged_in():
+                if mal_sync.set_list(media_item, status=status):
+                    feedback.info(f"MyAnimeList: {media_item.title.english} -> {status}")
+                else:
+                    feedback.error(f"MyAnimeList update failed for {media_item.title.english}")
         return InternalDirective.RELOAD
 
     return action
@@ -238,7 +244,8 @@ def _manage_user_media_list_in_bulk(ctx: Context, state: State) -> MenuAction:
         if not search_result:
             return InternalDirective.RELOAD
 
-        if not ctx.media_api.is_authenticated():
+        from ..... import mal_sync   # ANI.KOR: MAL counts as logged in
+        if not ctx.media_api.is_authenticated() and not mal_sync.logged_in():
             feedback.warning(
                 "You are not authenticated",
             )
@@ -290,12 +297,14 @@ def _manage_user_media_list_in_bulk(ctx: Context, state: State) -> MenuAction:
                 )
                 # remote
 
-                if not ctx.media_api.update_list_entry(
+                if ctx.media_api.is_authenticated() and not ctx.media_api.update_list_entry(
                     UpdateUserMediaListEntryParams(
                         media_item.id, status=UserMediaListStatus(status)
                     )
                 ):
                     print(f"Failed to update {media_item.title.english}")
+                if mal_sync.logged_in() and not mal_sync.set_list(media_item, status=status):
+                    feedback.error(f"MyAnimeList update failed for {media_item.title.english}")
 
                 progress.update(task_id, advance=1)  # type: ignore
         return InternalDirective.RELOAD
@@ -354,7 +363,8 @@ def _score_anime(ctx: Context, state: State) -> MenuAction:
         if not media_item:
             return InternalDirective.RELOAD
 
-        if not ctx.media_api.is_authenticated():
+        from ..... import mal_sync
+        if not ctx.media_api.is_authenticated() and not mal_sync.logged_in():
             return InternalDirective.RELOAD
 
         score_str = ctx.selector.ask("Enter score (0.0 - 10.0):")
@@ -367,9 +377,15 @@ def _score_anime(ctx: Context, state: State) -> MenuAction:
                 media_id=media_item.id, media_item=media_item, score=score
             )
             # remote
-            ctx.media_api.update_list_entry(
-                UpdateUserMediaListEntryParams(media_id=media_item.id, score=score)
-            )
+            if ctx.media_api.is_authenticated():
+                ctx.media_api.update_list_entry(
+                    UpdateUserMediaListEntryParams(media_id=media_item.id, score=score)
+                )
+            if mal_sync.logged_in() and score:
+                if mal_sync.set_list(media_item, score=score):
+                    feedback.info(f"MyAnimeList score: {score:g}")
+                else:
+                    feedback.error("MyAnimeList score update failed")
         except (ValueError, TypeError):
             feedback.error(
                 "Invalid score entered", "Please enter a number between 0.0 and 10.0"

@@ -127,6 +127,8 @@ def downloads_player_controls(
         if media_item.streaming_episodes:
             streaming_episode = media_item.streaming_episodes.get(current_episode_num)
             title = streaming_episode.title if streaming_episode else title
+        from ..... import mal_sync   # ANI.KOR 11-18: Continue Watching stamp + MAL watching
+        mal_sync.play_started(media_item, current_episode_num)
         player_result = ctx.player.play(
             PlayerParams(
                 url=str(file_path),

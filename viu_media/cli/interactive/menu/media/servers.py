@@ -80,6 +80,9 @@ def servers(ctx: Context, state: State) -> State | InternalDirective:
 
     if not state.media_api.media_item or not state.provider.anime:
         return InternalDirective.BACKX3
+    # ANI.KOR 11-18: stamp Continue Watching + MAL status watching/rewatching (background)
+    from ..... import mal_sync
+    mal_sync.play_started(media_item, episode_number)
     player_result = ctx.player.play(
         PlayerParams(
             url=stream_link_obj.link,

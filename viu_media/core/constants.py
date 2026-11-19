@@ -6,13 +6,16 @@ from pathlib import Path
 PLATFORM = sys.platform
 CLI_NAME = "VIU"
 CLI_NAME_LOWER = "viu"
-PROJECT_NAME = "viu-media"
+PROJECT_NAME = "viu_media"  # ANI.KOR: the package (the distribution is "anikor")
 APP_NAME = os.environ.get(f"{CLI_NAME}_APP_NAME", CLI_NAME_LOWER)
 
 USER_NAME = os.environ.get("USERNAME", os.environ.get("USER", "User"))
 
 
-__version__ = metadata.version("viu_media")
+try:
+    __version__ = metadata.version("anikor")  # ANI.KOR
+except metadata.PackageNotFoundError:
+    __version__ = metadata.version("viu_media")
 
 AUTHOR = "viu-media"
 GIT_REPO = "github.com"

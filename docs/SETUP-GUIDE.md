@@ -10,9 +10,11 @@ double-click the desktop icon.
 
 ## Part 1: Install (about 5 minutes)
 
-1. Go to **<https://github.com/anikor-dev/anikor/releases/latest>**.
-2. Scroll to **Assets** and click **Install ANI.KOR.bat**. It downloads.
-3. Open your **Downloads** folder and **double-click** `Install ANI.KOR.bat`.
+1. Click this link: **<https://github.com/anikor-dev/anikor/releases/latest/download/Install.ANI.KOR.bat>**
+   It downloads a small file called `Install.ANI.KOR.bat`.
+   (If your browser asks whether to keep it, click **Keep**.)
+2. Open your **Downloads** folder.
+3. **Double-click** `Install.ANI.KOR.bat`.
 4. Windows may show a blue box, **"Windows protected your PC"**.
    Click **More info**, then **Run anyway**. (It shows this for any file it doesn't know.)
 5. A black window opens and starts installing. You'll see lines like `[ok] uv`, `[ok] mpv`.

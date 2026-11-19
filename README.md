@@ -9,8 +9,8 @@ MyAnimeList sync and a new poster home screen.
 
 ## Windows: install in 3 clicks
 
-1. **[Download the installer](https://github.com/anikor-dev/anikor/releases/latest)**: under
-   *Assets*, click **Install ANI.KOR.bat**.
+1. **[Download the installer](https://github.com/anikor-dev/anikor/releases/latest/download/Install.ANI.KOR.bat)**
+   (`Install.ANI.KOR.bat`).
 2. Double-click the file you downloaded.
    - If Windows says *"Windows protected your PC"*: click **More info** → **Run anyway**.
    - Don't pick "Run as administrator", a normal double-click is right.

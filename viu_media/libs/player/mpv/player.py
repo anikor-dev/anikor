@@ -262,9 +262,35 @@ class MpvPlayer(BasePlayer):
         if params.title:
             mpv_args.append(f"--title={params.title}")
 
+        # ANI.KOR: Tab in the video = close it and go to the episode list (Tab there = back a page)
+        if back_script := _back_key_script():
+            mpv_args.append(f"--script={back_script}")
+
         if self.config.args:
             mpv_args.extend(self.config.args.split(","))
         return mpv_args
+
+
+def _back_key_script() -> str | None:
+    """ANI.KOR: a tiny mpv script binding Tab -> drop the back-to-episodes flag and quit.
+    player_controls sees the flag and jumps straight to the episode list."""
+    try:
+        from ....anikor.paths import BACK_FLAG, CACHE
+
+        CACHE.mkdir(parents=True, exist_ok=True)
+        script = CACHE / "anikor-tab-back.lua"
+        body = (
+            "local flag = [==[" + str(BACK_FLAG) + "]==]\n"
+            "mp.add_forced_key_binding('TAB', 'anikor-back', function()\n"
+            "    local f = io.open(flag, 'w'); if f then f:close() end\n"
+            "    mp.command('quit')\n"
+            "end)\n"
+        )
+        if not script.exists() or script.read_text() != body:
+            script.write_text(body)
+        return str(script)
+    except Exception:  # noqa: BLE001
+        return None
 
 
 if __name__ == "__main__":

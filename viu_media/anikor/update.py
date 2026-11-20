@@ -108,6 +108,12 @@ def start(info: dict | None = None) -> str:
                  "-Update", "-WaitPid", str(os.getpid())],
                 creationflags=getattr(subprocess, "CREATE_NEW_CONSOLE", 0x10))
             return f"Updating to v{info['latest']} — ANI.KOR will reopen by itself."
+    if sys.platform == "linux" and os.environ.get("ANIKOR_LAUNCHER") == "1":
+        # started from the app menu: the launcher updates + reopens when we quit
+        from .linuxsetup import home
+        home().mkdir(parents=True, exist_ok=True)
+        (home() / "update-requested").touch()
+        return f"Updating to v{info['latest']}…"
     uv = shutil.which("uv")
     if uv:
         subprocess.Popen([uv, "tool", "install", "--force", "--python", "3.12", info["wheel"]])

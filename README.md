@@ -42,7 +42,21 @@ the top of ANI.KOR. Click it (or press U) and it updates and reopens. Nothing up
 
 While a video plays: Space pause, ←/→ seek, f fullscreen, q close the video.
 
-## Linux / macOS
+## Linux: install
+
+Open a terminal, paste this and press **Enter**:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/anikor-dev/anikor/main/linux/install.sh | bash
+```
+
+It installs kitty, mpv, fzf, uv and the font (asks for your password once for mpv/fzf),
+then ANI.KOR. Open **ANI.KOR** from your app menu (or run `anikor-kitty`). It opens in its
+own kitty window with the ANI.KOR look (glass background, lavender/peach colors, Nerd Font);
+your normal kitty settings aren't touched. Works on Arch, Debian/Ubuntu, Fedora, openSUSE,
+Void and Alpine. Updates work the same as on Windows: the **UPDATE** button.
+
+## macOS
 
 Needs `mpv`, `fzf`, [uv](https://docs.astral.sh/uv/) and a Nerd Font. kitty shows the sharpest posters.
 
@@ -60,6 +74,7 @@ anikor login           link MyAnimeList (guided)   ·   anikor login status
 anikor update          install the newest version now
 anikor classic         Viu's plain text menus
 anikor version
+anikor setup-linux     (Linux) recreate the app-menu entry + kitty window
 ```
 
 ## Where your stuff lives
@@ -68,7 +83,7 @@ Your MyAnimeList login, settings and cache are kept **outside** the install, so 
 never touch them:
 
 - Windows: `%LOCALAPPDATA%\viu` (login + settings) and `%LOCALAPPDATA%\ANI.KOR` (launcher)
-- Linux: `~/.config/viu`, `~/.cache/viu`, `~/.cache/anikor`
+- Linux: `~/.config/viu`, `~/.cache/viu`, `~/.cache/anikor` (login, settings) and `~/.local/share/anikor` (launcher + kitty look)
 
 ## Credits
 

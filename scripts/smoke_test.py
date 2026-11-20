@@ -7,7 +7,7 @@ import importlib
 import sys
 
 for mod in ["viu_media.anikor.cli", "viu_media.anikor.app", "viu_media.anikor.update",
-            "viu_media.anikor.winsetup", "viu_media.anikor.bridge", "viu_media.mal_sync",
+            "viu_media.anikor.winsetup", "viu_media.anikor.linuxsetup", "viu_media.anikor.bridge", "viu_media.mal_sync",
             "viu_media.libs.provider.anime.anicli.provider",
             "viu_media.libs.selectors.fzf.selector",
             "viu_media.cli.interactive.menu.media.main",

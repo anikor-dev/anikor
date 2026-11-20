@@ -7,6 +7,7 @@
     anikor classic         the plain text menus instead of the dashboard
     anikor version         which version is installed
     anikor setup-windows   (Windows) recreate the shortcut + Windows Terminal profile
+    anikor setup-linux     (Linux) recreate the app-menu entry + ANI.KOR's kitty window
 """
 from __future__ import annotations
 
@@ -173,6 +174,9 @@ def main() -> None:
         return
     if cmd == "setup-windows":
         from .winsetup import setup
+        sys.exit(setup(quiet="--quiet" in args))
+    if cmd == "setup-linux":
+        from .linuxsetup import setup
         sys.exit(setup(quiet="--quiet" in args))
     if cmd == "classic":
         _viu("anilist", *args[1:])

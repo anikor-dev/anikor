@@ -12,6 +12,7 @@ scripts/privacy-scan.sh
 notes=$(mktemp)
 awk -v h="## v$v " 'index($0,h)==1{on=1;next} /^## v/{on=0} on' CHANGELOG.md > "$notes"
 printf '\n---\n**New here? (Windows)** Download **Install.ANI.KOR.bat** below and double-click it. [Step-by-step guide](https://github.com/anikor-dev/anikor/blob/main/docs/SETUP-GUIDE.md)\n' >> "$notes"
+printf '\n**Linux:** paste in a terminal: `curl -fsSL https://raw.githubusercontent.com/anikor-dev/anikor/main/linux/install.sh | bash`\n' >> "$notes"
 cp "windows/Install ANI.KOR.bat" "dist/Install.ANI.KOR.bat"
 "$GH" release create "$tag" "dist/anikor-$v-py3-none-any.whl" "dist/Install.ANI.KOR.bat" \
     --repo anikor-dev/anikor --title "ANI.KOR $tag" --notes-file "$notes"

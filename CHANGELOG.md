@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.3 (2026-11-21)
+
+Removed the Viu donation pop-up and setup quiz
+
 ## v0.1.2 (2026-11-20)
 
 Linux one-line installer: installs kitty, mpv, fzf, the font and ANI.KOR, and adds an ANI.KOR app-menu entry that opens in its own styled kitty window (your kitty settings aren't touched). Tab in the video now goes to the episode list.

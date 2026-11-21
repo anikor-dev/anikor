@@ -28,26 +28,16 @@ CONFIG_HEADER = f"""
 {config_asci}
 #
 # ==============================================================================
-# This is the Viu configuration file. It uses the TOML format.
-# You can modify these values to customize the behavior of Viu.
+# This is the ANI.KOR configuration file. It uses the TOML format.
+# You can modify these values to customize the behavior of ANI.KOR.
 # For more information on the available options, please refer to the
 # official documentation on GitHub.
 # ==============================================================================
 """.lstrip()
 
-CONFIG_FOOTER = f"""
+CONFIG_FOOTER = """
 # ==============================================================================
-#
-# HOPE YOU ENJOY {CLI_NAME} AND BE SURE TO STAR THE PROJECT ON GITHUB
-# {REPO_HOME}
-#
-# Also join the discord server
-# where the anime tech community lives :)
-# {DISCORD_INVITE}
-# If you like the project and are able to support it please consider buying me a coffee at {SUPPORT_PROJECT_URL}.
-# If you would like to connect with me join the discord server from there you can dm for hackathons, or even to tell me a joke 😂
-# Otherwise enjoy your terminal anime browser experience 😁
-#
+# ANI.KOR (built on Viu by viu-media, Unlicense)
 # ==============================================================================
 """.lstrip()
 

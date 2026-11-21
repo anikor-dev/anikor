@@ -33,36 +33,15 @@ class ConfigLoader:
 
     def _handle_first_run(self) -> AppConfig:
         """Handles the configuration process when no config.toml file is found."""
-        click.echo(
-            "[bold yellow]Welcome to Viu![/bold yellow] No configuration file found."
-        )
-        from InquirerPy import inquirer
-
-        from .editor import InteractiveConfigEditor
+        # ANI.KOR: no Viu setup quiz; start with ANI.KOR defaults
         from .generate import generate_config_toml_from_app_model
 
-        choice = inquirer.select(  # type: ignore
-            message="How would you like to proceed?",
-            choices=[
-                "Use default settings (Recommended for new users)",
-                "Configure settings interactively",
-            ],
-            default="Use default settings (Recommended for new users)",
-        ).execute()
-
-        if "interactively" in choice:
-            editor = InteractiveConfigEditor(AppConfig())
-            app_config = editor.run()
-        else:
-            app_config = AppConfig()
+        app_config = AppConfig()
 
         config_toml_content = generate_config_toml_from_app_model(app_config)
         try:
             self.config_path.parent.mkdir(parents=True, exist_ok=True)
             self.config_path.write_text(config_toml_content, encoding="utf-8")
-            click.echo(
-                f"Configuration file created at: [green]{self.config_path}[/green]"
-            )
         except Exception as e:
             raise ConfigError(
                 f"Could not create configuration file at {self.config_path!s}. "
